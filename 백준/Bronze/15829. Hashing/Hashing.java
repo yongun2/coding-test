@@ -1,10 +1,11 @@
 import java.io.*;
+import java.math.BigInteger;
 import java.util.*;
 
 class Main {
 
     private static final int R = 31;
-    private static final int M = 1234567891;
+    private static final long M = 1234567891;
     private static int L;
 
 
@@ -21,11 +22,12 @@ class Main {
         bw.close();
     }
 
-    private static int hash(String str) {
-        int sum = 0;
+    private static BigInteger hash(String str) {
+        BigInteger sum = BigInteger.ZERO;
+
         for (int i = 0; i < str.length(); ++i) {
-            sum += (int) ((str.charAt(i) - 96) * Math.pow(R, i));
+            sum = sum.add(BigInteger.valueOf(str.charAt(i) - 96).multiply(BigInteger.valueOf(R).pow(i)));
         }
-        return sum % M;
+        return sum.remainder(BigInteger.valueOf(M));
     }
 }
