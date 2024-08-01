@@ -38,22 +38,10 @@ class Main {
         }
 
         for (int i = 1; i <= N; ++i) {
-            if (!used[i]) {
-                if (depth == 0) {
-                    used[i] = true;
-                    sequence[depth] = i;
-                    backtracking(depth + 1);
-                    used[i] = false;
+            if (depth > 0 && i <= sequence[depth - 1]) continue;
 
-                } else {
-                    if (i > sequence[depth - 1]) {
-                        used[i] = true;
-                        sequence[depth] = i;
-                        backtracking(depth + 1);
-                        used[i] = false;
-                    }
-                }
-            }
+            sequence[depth] = i;
+            backtracking(depth + 1);
         }
 
     }
