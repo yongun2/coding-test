@@ -12,5 +12,6 @@
 ## Database
 |  |
 | ------- |
+| [0570-managers-with-at-least-5-direct-reports](https://github.com/yongun2/coding-test/tree/master/0570-managers-with-at-least-5-direct-reports) |
 | [0620-not-boring-movies](https://github.com/yongun2/coding-test/tree/master/0620-not-boring-movies) |
 <!---LeetCode Topics End-->
