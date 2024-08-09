@@ -1,0 +1,12 @@
+-- 코드를 작성해주세요
+SELECT  fr.ID,
+        fni.FISH_NAME,
+        fr.LENGTH
+FROM (
+    SELECT  *,
+            DENSE_RANK() OVER(PARTITION BY FISH_TYPE ORDER BY LENGTH DESC) AS 'rank' 
+    FROM FISH_INFO
+) fr
+INNER JOIN FISH_NAME_INFO fni ON fr.FISH_TYPE = fni.FISH_TYPE 
+WHERE fr.rank = 1
+ORDER BY fr.ID
