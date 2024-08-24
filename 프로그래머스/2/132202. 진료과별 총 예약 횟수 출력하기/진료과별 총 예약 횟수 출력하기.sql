@@ -7,6 +7,5 @@ WHERE
 GROUP BY
     MCDP_CD
 ORDER BY
-    COUNT(DATE_FORMAT(APNT_YMD, '%Y-%m') = '2022-05'),
+    COUNT(*),
     MCDP_CD
-    
