@@ -4,16 +4,6 @@ import java.util.*;
 class Main {
 
     static int N, M, K;
-    static int[][] grid;
-    static boolean[][] visited;
-
-    static int[] dx = {1, 0};
-    static int[] dy = {0, 1};
-
-    static int result = 0;
-    static int count = 0;
-
-    static int posCircleX, posCircleY;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,40 +14,42 @@ class Main {
         st = new StringTokenizer(br.readLine(), " ");
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken()) - 1;
 
-        grid = new int[N][M];
+        int[][] dp1, dp2;
 
-        posCircleX = K % M - 1;
-        posCircleY = K / M;
+        if (K == -1) {
+            dp1 = new int[N][M];
 
-        dfs(0, 0, posCircleX, posCircleY);
-        result += count == 0 ? 1 : count;
-        count = 0;
-        dfs(posCircleX, posCircleY, M - 1, N - 1);
-        result *= count;
-        System.out.println(result);
+            search(dp1);
 
-    }
-
-    static void dfs(int x, int y, int targetX, int targetY) {
-        if (x == targetX && y == targetY) {
-            count++;
+            System.out.println(dp1[N - 1][M - 1]);
             return;
         }
 
+        int posX = K % M;
+        int posY = K / M;
 
-        for (int i = 0; i < 2; ++i) {
-            int nx = dx[i] + x;
-            int ny = dy[i] + y;
+        dp1 = new int[posY + 1][posX + 1];
+        dp2 = new int[N - posY][M - posX];
+        search(dp1);
+        search(dp2);
 
-            if (inRange(nx, ny)) {
-                dfs(nx, ny, targetX, targetY);
+        System.out.println(dp1[posY][posX] * dp2[N - posY - 1][M - posX - 1]);
+    }
+
+    static void search(int[][] grid) {
+        for (int i = 0; i < grid.length; ++i) {
+            grid[i][0] = 1;
+        }
+
+        Arrays.fill(grid[0], 1);
+
+        for (int i = 1; i < grid.length; ++i) {
+            for (int j = 1; j < grid[i].length; ++j) {
+                grid[i][j] = grid[i - 1][j] + grid[i][j - 1];
             }
         }
     }
 
-    static boolean inRange(int x, int y) {
-        return 0 <= x && x < M && 0 <= y && y < N;
-    }
 }
